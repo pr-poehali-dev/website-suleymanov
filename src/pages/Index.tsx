@@ -17,7 +17,7 @@ const Index = () => {
               <span className="text-xl font-bold">SULEYMANOV</span>
             </div>
             <div className="hidden md:flex items-center space-x-6">
-              <a href="#services" className="text-muted-foreground hover:text-primary transition-colors">Услуги</a>
+              <a href="/services" className="text-muted-foreground hover:text-primary transition-colors">Услуги</a>
               <a href="#portfolio" className="text-muted-foreground hover:text-primary transition-colors">Портфолио</a>
               <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">Контакты</a>
               <Button size="sm">Обсудить проект</Button>
