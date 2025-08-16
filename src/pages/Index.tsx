@@ -230,7 +230,7 @@ const Index = () => {
                   <Icon name="User" size={20} className="text-primary" />
                 </div>
                 <div>
-                  <div className="font-semibold">ИП Сулейманов Сергей Родионович</div>
+                  <div className="font-semibold">Сулейманов Сергей Родионович</div>
                   <div className="text-muted-foreground">ИНН: 432800926838</div>
                 </div>
               </div>
