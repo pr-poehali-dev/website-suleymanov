@@ -270,6 +270,12 @@ const Index = () => {
                 <label className="text-sm font-medium mb-2 block">Сообщение</label>
                 <Textarea placeholder="Расскажите о вашем проекте..." rows={4} />
               </div>
+              <div className="text-xs text-muted-foreground mb-3">
+                Нажимая кнопку, вы соглашаетесь с{" "}
+                <a href="/privacy" className="text-primary hover:underline">
+                  политикой конфиденциальности
+                </a>
+              </div>
               <Button className="w-full">
                 <Icon name="Send" size={16} className="mr-2" />
                 Отправить заявку
@@ -287,7 +293,7 @@ const Index = () => {
             <span className="text-xl font-bold">SULEYMANOV</span>
           </div>
           <p className="text-slate-400 mb-4">WordPress-разработчик • Создание сайтов под ключ</p>
-          <div className="flex justify-center gap-6">
+          <div className="flex justify-center gap-6 mb-4">
             <Button variant="ghost" size="sm" className="text-slate-400 hover:text-white">
               <Icon name="Phone" size={16} className="mr-2" />
               +7 (995) 070-64-97
@@ -296,6 +302,11 @@ const Index = () => {
               <Icon name="Mail" size={16} className="mr-2" />
               support@suleymanov.su
             </Button>
+          </div>
+          <div className="text-xs text-slate-500">
+            <a href="/privacy" className="hover:text-slate-300 transition-colors">
+              Политика конфиденциальности
+            </a>
           </div>
         </div>
       </footer>
