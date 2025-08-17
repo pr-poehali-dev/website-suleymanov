@@ -260,7 +260,10 @@ const Services = () => {
                     </TabsContent>
                   </Tabs>
                   
-                  <Button className="w-full mt-6">
+                  <Button 
+                    className="w-full mt-6"
+                    onClick={() => window.location.href = `/services/${service.id}`}
+                  >
                     <Icon name="MessageCircle" size={16} className="mr-2" />
                     Заказать {service.name.toLowerCase()}
                   </Button>
