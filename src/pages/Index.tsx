@@ -1,11 +1,54 @@
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import Icon from "@/components/ui/icon"
+import DiscussProjectModal from "@/components/DiscussProjectModal"
+import AdditionalServicesModal from "@/components/AdditionalServicesModal"
+import PromotionsSection from "@/components/PromotionsSection"
+import ScrollPromoModal from "@/components/ScrollPromoModal"
 
 const Index = () => {
+  const [isDiscussModalOpen, setIsDiscussModalOpen] = useState(false);
+  const [isServicesModalOpen, setIsServicesModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<any>(null);
+  const [isScrollPromoOpen, setIsScrollPromoOpen] = useState(false);
+  const [hasSeenPromo, setHasSeenPromo] = useState(false);
+
+  // Отслеживание скролла до блока услуг
+  useEffect(() => {
+    if (hasSeenPromo) return;
+
+    const handleScroll = () => {
+      const servicesSection = document.getElementById('services');
+      if (!servicesSection) return;
+
+      const rect = servicesSection.getBoundingClientRect();
+      const isVisible = rect.top <= window.innerHeight && rect.bottom >= 0;
+
+      if (isVisible && !hasSeenPromo) {
+        setIsScrollPromoOpen(true);
+        setHasSeenPromo(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasSeenPromo]);
+
+  const services = [
+    { id: "landing", name: "Landing Page", icon: "Rocket", prices: ["35 000 ₽", "52 000 ₽", "78 000 ₽"] },
+    { id: "showcase", name: "Сайт-витрина", icon: "Store", prices: ["18 000 ₽", "32 000 ₽", "50 000 ₽"] },
+    { id: "info", name: "Информационный сайт", icon: "FileText", prices: ["34 000 ₽", "78 000 ₽", "92 000 ₽"] },
+    { id: "ecommerce", name: "Интернет-магазин", icon: "ShoppingCart", prices: ["60 000 ₽", "92 000 ₽", "120 000 ₽"] }
+  ];
+
+  const handleServiceClick = (service: any) => {
+    setSelectedService(service);
+    setIsServicesModalOpen(true);
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-slate-50">
       {/* Navigation */}
@@ -20,7 +63,7 @@ const Index = () => {
               <a href="/services" className="text-muted-foreground hover:text-primary transition-colors">Услуги</a>
               <a href="#portfolio" className="text-muted-foreground hover:text-primary transition-colors">Портфолио</a>
               <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">Контакты</a>
-              <Button size="sm">Обсудить проект</Button>
+              <Button size="sm" onClick={() => setIsDiscussModalOpen(true)}>Обсудить проект</Button>
             </div>
           </div>
         </div>
@@ -37,7 +80,7 @@ const Index = () => {
             Быстрые, безопасные и удобные сайты на WordPress. 3 года опыта, 20+ реализованных проектов
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="text-lg px-8">
+            <Button size="lg" className="text-lg px-8" onClick={() => setIsDiscussModalOpen(true)}>
               <Icon name="MessageCircle" size={20} className="mr-2" />
               Обсудить проект
             </Button>
@@ -85,13 +128,8 @@ const Index = () => {
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {[
-            { name: "Landing Page", icon: "Rocket", prices: ["35 000 ₽", "52 000 ₽", "78 000 ₽"] },
-            { name: "Сайт-витрина", icon: "Store", prices: ["18 000 ₽", "32 000 ₽", "50 000 ₽"] },
-            { name: "Информационный сайт", icon: "FileText", prices: ["34 000 ₽", "78 000 ₽", "92 000 ₽"] },
-            { name: "Интернет-магазин", icon: "ShoppingCart", prices: ["60 000 ₽", "92 000 ₽", "120 000 ₽"] }
-          ].map((service, index) => (
-            <Card key={index} className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+          {services.map((service, index) => (
+            <Card key={index} className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer" onClick={() => handleServiceClick(service)}>
               <CardHeader className="text-center">
                 <div className="mx-auto mb-4 p-3 bg-primary/10 rounded-full w-fit">
                   <Icon name={service.icon as any} size={24} className="text-primary" />
@@ -284,6 +322,27 @@ const Index = () => {
           </Card>
         </div>
       </section>
+
+      {/* Promotions Section */}
+      <PromotionsSection onDiscussProject={() => setIsDiscussModalOpen(true)} />
+
+      {/* Modals */}
+      <DiscussProjectModal 
+        isOpen={isDiscussModalOpen} 
+        onClose={() => setIsDiscussModalOpen(false)} 
+      />
+      
+      <AdditionalServicesModal
+        isOpen={isServicesModalOpen}
+        onClose={() => setIsServicesModalOpen(false)}
+        service={selectedService}
+      />
+      
+      <ScrollPromoModal
+        isOpen={isScrollPromoOpen}
+        onClose={() => setIsScrollPromoOpen(false)}
+        onDiscussProject={() => setIsDiscussModalOpen(true)}
+      />
 
       {/* Footer */}
       <footer className="bg-slate-900 text-white py-12">
