@@ -163,15 +163,24 @@ const Index = () => {
           <CardContent>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
-                { name: "Настройка хостинга", price: "1 000 ₽" },
-                { name: "Настройка домена", price: "1 000 ₽" },
-                { name: "Техническое обслуживание", price: "25 000 ₽/мес" },
-                { name: "SEO-оптимизация", price: "от 15 000 ₽" },
-                { name: "Интеграция сервисов", price: "5 000 ₽" }
+                { name: "Настройка хостинга", price: "1 000 ₽", icon: "Server" },
+                { name: "Настройка домена", price: "1 000 ₽", icon: "Globe" },
+                { name: "Техническое обслуживание", price: "25 000 ₽/мес", icon: "Settings" },
+                { name: "SEO-оптимизация", price: "от 15 000 ₽", icon: "Search" },
+                { name: "Интеграция сервисов", price: "5 000 ₽", icon: "Zap" }
               ].map((service, index) => (
-                <div key={index} className="flex justify-between items-center p-3 bg-background rounded-lg">
-                  <span className="text-sm">{service.name}</span>
-                  <Badge variant="secondary">{service.price}</Badge>
+                <div 
+                  key={index} 
+                  className="flex justify-between items-center p-3 bg-background rounded-lg hover:bg-primary/5 hover:border-primary/30 border border-transparent transition-all duration-300 cursor-pointer group hover:scale-105 hover:shadow-md"
+                  onClick={() => setIsDiscussModalOpen(true)}
+                >
+                  <div className="flex items-center gap-2">
+                    <Icon name={service.icon as any} size={16} className="text-primary group-hover:text-primary/80" />
+                    <span className="text-sm group-hover:text-primary">{service.name}</span>
+                  </div>
+                  <Badge variant="secondary" className="group-hover:bg-primary group-hover:text-white transition-colors">
+                    {service.price}
+                  </Badge>
                 </div>
               ))}
             </div>
